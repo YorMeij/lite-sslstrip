@@ -40,3 +40,5 @@ print "ARP poison packets Bob generated"
 print "Start ARP-poisoning"
 arps = [arpA, arpB]
 sendp(arps, inter=60)
+
+print "Test git"
