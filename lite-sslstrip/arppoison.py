@@ -1,5 +1,6 @@
 from scapy.all import *
 
+
 class ArpPoison:
 
     def __init__(self, macA, ipA, maxB, ipB, macM, ipM):

