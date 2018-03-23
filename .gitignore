@@ -4,3 +4,5 @@ lite-sslstrip/lite-sslstrip\.nja
 lite-sslstrip/\.idea/
 
 cherrypy/
+
+*.pyc
