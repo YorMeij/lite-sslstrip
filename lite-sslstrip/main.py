@@ -18,7 +18,6 @@ parser.add_argument('macM', help="MAC address of you (Mallory)")
 parser.add_argument('ipM', help="IP address of you (Mallory)")
 
 args = parser.parse_args()
-print args.macA
 
 # Launch ARP attack
 arp = ArpPoison(args.macA, args.ipA, args.macB, args.ipB, args.macM, args.ipM)

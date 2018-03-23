@@ -6,3 +6,5 @@ lite-sslstrip/\.idea/
 cherrypy/
 
 *.pyc
+
+sslstrip/
