@@ -5,6 +5,7 @@
 import cherrypy
 import random
 import string
+import http.client
 
 ## Example of usage: a random string generator see: http://docs.cherrypy.org/en/latest/tutorials.html#tutorial-3-my-urls-have-parameters
 
@@ -28,6 +29,8 @@ class StringGenerator(object):
 ## TODO: relay the incoming connection from Alice to Bob
     @cherrypy.expose    # <-- decorator, you can ignore this
     def relay(self):
+        ## TODO: get the address that Alice wants to use
+
         return ""
 
 
