@@ -9,10 +9,11 @@ import string
 ## Example of usage: a random string generator see: http://docs.cherrypy.org/en/latest/tutorials.html#tutorial-3-my-urls-have-parameters
 
 # Class object to provide functionality for CherryPy server
-@cherrypy.expose    # <-- decorator, you can ignore this
+
 class StringGenerator(object):
     # function names map to the page that they generate
-    # this will map to /index and will show the string "Hello world!"
+    # this will map to /index and will show the string "Hello world!
+    @cherrypy.expose    # <-- decorator, you can ignore this
     def index(self):
         return "Hello world!"
 
@@ -20,12 +21,16 @@ class StringGenerator(object):
     # function arguments:
         # self: which is this class so you can call this function later on
         # anything else will be accessble use a http-parameter, in this case /generate?length=some_number
+    @cherrypy.expose    # <-- decorator, you can ignore this
     def generate(self, length=8):
         return ''.join(random.sample(string.hexdigits, int(length)))
 
 ## TODO: relay the incoming connection from Alice to Bob
+    @cherrypy.expose    # <-- decorator, you can ignore this
     def relay(self):
         return ""
+
+
 
 # starting the server
 if __name__ == '__main__':
@@ -33,3 +38,5 @@ if __name__ == '__main__':
     cherrypy.config.update({'server.socket_host': '0.0.0.0'})
     # this command actually starts the server
     cherrypy.quickstart(StringGenerator())
+
+
