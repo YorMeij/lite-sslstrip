@@ -1,0 +1,25 @@
+Requirements:
+- Python 3.0 or higher
+- Internet access
+
+Installation guide:
+    1) Install pip and pipenv (only for python 3.3 or lower)
+        follow: https://pip.pypa.io/en/stable/installing/
+        and then execute:
+        >  pip install pipenv
+
+    2) Install CherryPy
+        > pip install cherrypy
+
+        This might require you to install dependancies, install them as well.
+
+    3) Install Requests
+        > pipenv install requests
+
+    4) Clone Lite-SSLstrip source code
+        > git clone https://github.com/YorMeij/lite-sslstrip.git
+
+    5) Execute the program
+    > sudo python main.py macAlice ipAlice macBob ipBob macMallory ipMallory
+
+Happy hacking!

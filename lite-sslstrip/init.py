@@ -1,3 +1,8 @@
+"""
+Initiates the Lite-SSLstrip tool, sets up the enviroment by enabeling ip_forwarding, checks wehter we are root and
+sets up the IPtables to do the routing.
+"""
+
 import os
 import sys
 
@@ -19,9 +24,9 @@ def init():
     print ""
     print ""
 
-    ## Helper block, to remind the user of actions that need performing
     print "Welcome to lite-sslstrip"
 
+    # Check for root privilages
     if(os.geteuid() != 0):
         print "No root privileges, exiting"
         sys.exit()
@@ -32,5 +37,5 @@ def init():
     f.close()
 
     print "Reidirecting iptables"
-    # reroutes incoming trafic on port 80 (http) to port 8080 (lite-ssl)
+    # Reroutes incoming trafic on port 80 (http) to port 8080 (lite-ssl)
     os.system("iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080")

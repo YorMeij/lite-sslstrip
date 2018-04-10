@@ -1,19 +1,22 @@
+"""
+Example of a payload module, implements one function payload(response) which delivers a response
+Imagination is the only limit.
+"""
+
 import requests
 
-# example of payload class
-
-def payload(oldRequest):
+def payload(oldResponse):
     # create new request message
-    newRequest = requests.models.Response()
+    newResponse = requests.models.Response()
 
     # set parameters
-    newRequest.status_code = 200
-    newRequest.headers = r.headers
-    newRequest.url = oldRequest.url
-    newRequest.history = r.history
-    newRequest.encoding = r.encoding
-    newRequest.reason = r.reason
-    newRequest.elapsed = r.elapsed
-    newRequest.request = r.request
+    newResponse.status_code = 200
+    newResponse.headers = r.headers
+    newResponse.url = oldResponse.url
+    newResponse.history = r.history
+    newResponse.encoding = r.encoding
+    newResponse.reason = r.reason
+    newResponse.elapsed = r.elapsed
+    newResponse.request = r.request
 
-    return newRequest
+    return newResponse
